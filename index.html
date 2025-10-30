@@ -152,6 +152,17 @@
         }
       };
 
+      const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (e.shiftKey) {
+            document.execCommand('insertLineBreak');
+          } else {
+            document.execCommand('insertParagraph');
+          }
+        }
+      };
+
       const stripHtml = (html) => {
         const tmp = document.createElement('div');
         tmp.innerHTML = html;
@@ -340,7 +351,7 @@
                     {isEditing ? (
                       <div className="max-w-4xl mx-auto">
                         <input type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} className={`w-full text-3xl font-bold mb-4 bg-transparent border-b-2 ${borderColor} pb-2 outline-none`} placeholder="Note title..." />
-                        <div ref={editorRef} contentEditable onInput={handleContentChange} dangerouslySetInnerHTML={{ __html: editedContent }} className={`w-full min-h-96 bg-transparent outline-none`} suppressContentEditableWarning />
+                        <div ref={editorRef} contentEditable onInput={handleContentChange} onKeyDown={handleKeyDown} dangerouslySetInnerHTML={{ __html: editedContent }} className={`w-full min-h-96 bg-transparent outline-none`} suppressContentEditableWarning />
                       </div>
                     ) : (
                       <div className="max-w-4xl mx-auto">
